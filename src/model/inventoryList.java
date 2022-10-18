@@ -16,6 +16,19 @@ public class inventoryList {
     public inventoryList() {
     }
 
+    public inventoryList(Integer inv_Quantity, String company_Name, String department_Name, String inv_Num, String purchase_data, String inv_Name, String inv_Model, String inv_location, String inv_keeper, String inv_Remark) {
+        this.inv_Quantity = inv_Quantity;
+        this.company_Name = company_Name;
+        this.department_Name = department_Name;
+        this.inv_Num = inv_Num;
+        this.purchase_data = purchase_data;
+        this.inv_Name = inv_Name;
+        this.inv_Model = inv_Model;
+        this.inv_location = inv_location;
+        this.inv_keeper = inv_keeper;
+        this.inv_Remark = inv_Remark;
+    }       
+
     public inventoryList(Integer inv_Id, Integer inv_Quantity, String company_Name, String department_Name, String inv_Num, String purchase_data, String inv_Name, String inv_Model, String inv_location, String inv_keeper, String inv_Remark) {
         this.inv_Id = inv_Id;
         this.inv_Quantity = inv_Quantity;

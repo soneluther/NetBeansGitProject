@@ -25,13 +25,36 @@ public class inventoryListDao implements implDao {
      */
     public static void main(String[] args) {
         //System.out.println(new inventoryListDao().query(2156154));
-        inventoryList inventoryList = new inventoryListDao().queryCheck(String.valueOf(2168177));
-        System.out.println(inventoryList.getInv_Id()+"\t"+inventoryList.getInv_Num()+"\t"+inventoryList.getInv_Name());
+        //inventoryList inventoryList = new inventoryListDao().queryCheck(String.valueOf(2168177));
+        //System.out.println(inventoryList.getInv_Id()+"\t"+inventoryList.getInv_Num()+"\t"+inventoryList.getInv_Name());
     }
 
     @Override
     public void add(Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Connection conn = implDao.connectDB();
+        String SQL = "insert into inventory_list(company_Name, department_Name, inv_Num, purchase_data, inv_Name, inv_Model, inv_Quantity, inv_location, inv_keeper, inv_Remark) vlues(?,?,?,?,?,?,?,?,?,?)";
+        
+        inventoryList inv  = (inventoryList) o;
+        
+        try {
+            PreparedStatement ps = conn.prepareStatement(SQL);
+            ps.setString(1, inv.getCompany_Name());
+            ps.setString(2, inv.getDepartment_Name());
+            ps.setString(3, inv.getInv_Num());
+            ps.setString(4, inv.getPurchase_data());
+            ps.setString(5, inv.getInv_Name());
+            ps.setString(6, inv.getInv_Model());
+            ps.setInt(7, inv.getInv_Quantity());
+            ps.setString(8, inv.getInv_location());
+            ps.setString(9, inv.getInv_keeper());
+            ps.setString(10, inv.getInv_Remark());
+            
+            ps.executeUpdate();           
+            ps.close();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(inventoryListDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
@@ -61,7 +84,7 @@ public class inventoryListDao implements implDao {
     }
 
     @Override
-    public List queryTalbe() {
+    public List queryTable() {
         Connection conn = implDao.connectDB();
         String SQL = "select * from inventory_list";
 
@@ -97,11 +120,38 @@ public class inventoryListDao implements implDao {
         return inv_list;
     }
     
+    public Boolean queryInvNum(String invNum){
+        Boolean isExist = false;
+        Connection conn = implDao.connectDB();
+        String SQL = "select * from inventory_list where 1=1 ";
+        
+        if(!invNum.equals("")){
+            SQL+="and inv_Num like ? order by inv_Num";
+            invNum += "%";
+        }
+        
+        try {
+            PreparedStatement ps = conn.prepareStatement(SQL);
+            ps.setString(1, invNum);
+            ResultSet rs = ps.executeQuery();
+            
+            if(rs.next()){
+                isExist = true;
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(inventoryListDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return isExist;
+    }
+    
     public inventoryList queryCheck(String invNum){
         Connection conn = implDao.connectDB();
         String SQL = "select * from inventory_list where 1=1 ";
         inventoryList inventoryList=null;
-        if(invNum !=""){
+        
+        if(!invNum.equals("")){
             SQL+="and inv_Num like ? order by inv_Num";
             invNum+="%";
         }             

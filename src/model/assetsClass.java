@@ -9,8 +9,9 @@ package model;
  * @author tp558
  */
 public class assetsClass {
-    Integer acID;
-    String acNum, acName;
+    private Integer acID;
+    private String acNum, acName;
+    private Boolean acSet;
 
     public assetsClass() {
     }
@@ -21,6 +22,13 @@ public class assetsClass {
         this.acName = acName;
     }
 
+    public assetsClass(Integer acID, String acNum, String acName, Boolean acSet) {
+        this.acID = acID;
+        this.acNum = acNum;
+        this.acName = acName;
+        this.acSet = acSet;
+    }
+    
     public Integer getAcID() {
         return acID;
     }
@@ -44,4 +52,12 @@ public class assetsClass {
     public void setAcName(String acName) {
         this.acName = acName;
     }
+
+    public Boolean getAcSet() {
+        return acSet;
+    }
+
+    public void setAcSet(Boolean acSet) {
+        this.acSet = acSet;
+    }  
 }

@@ -41,7 +41,7 @@ public interface implDao {
     //查詢
     String query(Integer id);
 
-    List queryTalbe();
+    List queryTable();
 
     //修改
     void update(Object o);

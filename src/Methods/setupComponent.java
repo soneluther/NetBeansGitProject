@@ -19,10 +19,10 @@ public interface setupComponent {
         jDialog.setVisible(true);
     }
 
-    static void JFrameCenter(JFrame JFrame) {
+    static void JFrameCenter(JFrame jFrame) {
 
-        JFrame.pack();
-        JFrame.setLocationRelativeTo(null);
-        JFrame.setVisible(true);;
+        jFrame.pack();
+        jFrame.setLocationRelativeTo(null);
+        jFrame.setVisible(true);
     }
 }

@@ -4,17 +4,23 @@
  */
 package Conntroller;
 
-import Dao.assetsClassDao;
+import Dao.assetsNumDao;
 import Dao.inventoryListDao;
 import Methods.iniTable;
 import Methods.setupComponent;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.ArrayList;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
+import model.accountSubject;
 import model.assetsClass;
+import model.classCode;
+import model.companyCode;
+import model.departCode;
 import model.inventoryList;
+import Methods.setComboBox;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  *
@@ -27,10 +33,9 @@ public class inventoryListUI extends javax.swing.JFrame {
      */
     public inventoryListUI() {
         initComponents();
+
         setCenter();
-        
-        iniTable.iniInvListTable(inv_List_Table);
-        showTable();
+        iniTable.setTable(inv_List_Table);
     }
 
     /**
@@ -44,62 +49,112 @@ public class inventoryListUI extends javax.swing.JFrame {
 
         errMsg_jDialog = new javax.swing.JDialog();
         modifyInvItem_JFrame = new javax.swing.JFrame();
-        jLabel2 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        purchase_jLabel = new javax.swing.JLabel();
-        purchase_jTextField = new javax.swing.JTextField();
-        comName_jLabel = new javax.swing.JLabel();
-        comName_jTextField = new javax.swing.JTextField();
-        depart_jLabel = new javax.swing.JLabel();
-        depart_jTextField = new javax.swing.JTextField();
-        invNum_jLabel = new javax.swing.JLabel();
-        invNum_jTextField = new javax.swing.JTextField();
-        invName_jLabel = new javax.swing.JLabel();
-        invName_jTextField = new javax.swing.JTextField();
-        invModel_jLabel = new javax.swing.JLabel();
-        invModel_jTextField = new javax.swing.JTextField();
-        invQuantity_jLabel = new javax.swing.JLabel();
-        invQuantity_jTextField = new javax.swing.JTextField();
-        location_jLabel = new javax.swing.JLabel();
-        location_jTextField = new javax.swing.JTextField();
-        remark_jLabel = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        remark_jTextArea = new javax.swing.JTextArea();
-        keeper_jLabel = new javax.swing.JLabel();
-        keeper_jTextField = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        InvID_jLabel = new javax.swing.JLabel();
-        invID_jTextField = new javax.swing.JTextField();
+        InvMod_JBL = new javax.swing.JLabel();
+        InvInfoMod_JBL = new javax.swing.JPanel();
+        PHDMod_JBL = new javax.swing.JLabel();
+        PHDMod_TF = new javax.swing.JTextField();
+        CPNMod_JBL = new javax.swing.JLabel();
+        CPNMod_TF = new javax.swing.JTextField();
+        DPMod_JLB = new javax.swing.JLabel();
+        DPMod_TF = new javax.swing.JTextField();
+        INMod_JLB = new javax.swing.JLabel();
+        INMod_TF = new javax.swing.JTextField();
+        INMMod_JBL = new javax.swing.JLabel();
+        INMMod_TF = new javax.swing.JTextField();
+        IMDMod_JBL = new javax.swing.JLabel();
+        IMDMod_TF = new javax.swing.JTextField();
+        IQTMod_JBL = new javax.swing.JLabel();
+        IQTMod_TF = new javax.swing.JTextField();
+        LCMod_JBL = new javax.swing.JLabel();
+        LCMod_TF = new javax.swing.JTextField();
+        RMMod_JBL = new javax.swing.JLabel();
+        RMMod_JSP = new javax.swing.JScrollPane();
+        RMMod_TA = new javax.swing.JTextArea();
+        KPMod_JLB = new javax.swing.JLabel();
+        KPMod_TF = new javax.swing.JTextField();
+        InvModCancel = new javax.swing.JButton();
+        InvModSend = new javax.swing.JButton();
+        InvModID_JBL = new javax.swing.JLabel();
+        InvModID_TF = new javax.swing.JTextField();
         addInvItem_jFrame = new javax.swing.JFrame();
         jPanel4 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        AssetClass_jComboBox = new javax.swing.JComboBox<>();
-        AssetClass_jLabel = new javax.swing.JLabel();
-        ComCode_jLabel = new javax.swing.JLabel();
-        ComCode_jComboBox = new javax.swing.JComboBox<>();
-        Accounting_jLabel = new javax.swing.JLabel();
-        Accounting_jComboBox = new javax.swing.JComboBox<>();
-        ClassCode_jLabel = new javax.swing.JLabel();
-        ClassCode_jComboBox = new javax.swing.JComboBox<>();
-        invCheck_btn = new javax.swing.JButton();
-        InvCode_TF = new javax.swing.JTextField();
-        ac1_RB = new javax.swing.JRadioButton();
-        ac2_RB = new javax.swing.JRadioButton();
-        AssetClass_TF = new javax.swing.JTextField();
-        ComCode_TF = new javax.swing.JTextField();
-        Accounting_TF = new javax.swing.JTextField();
-        ClassCode_TF = new javax.swing.JTextField();
-        assetClass_BG = new javax.swing.ButtonGroup();
+        AddInvData_JLB = new javax.swing.JLabel();
+        Check_JPL = new javax.swing.JPanel();
+        AssetClass_JLB = new javax.swing.JLabel();
+        ComCode_JLB = new javax.swing.JLabel();
+        AccSub_JLB = new javax.swing.JLabel();
+        ClassCode_JLB = new javax.swing.JLabel();
+        ClassCode_Check = new javax.swing.JComboBox<>();
+        AccSub_Check = new javax.swing.JComboBox<>();
+        ComCode_Check = new javax.swing.JComboBox<>();
+        AssetClass_Check = new javax.swing.JComboBox<>();
+        invQuery_btn = new javax.swing.JButton();
+        ACNum_JLB = new javax.swing.JLabel();
+        CPCNum_JLB = new javax.swing.JLabel();
+        ASNum_JLB = new javax.swing.JLabel();
+        CLCNum_JLB = new javax.swing.JLabel();
+        SelectInvCode_JLB = new javax.swing.JLabel();
+        NumInvAdd_JPL = new javax.swing.JPanel();
+        PHDAdd_JLB = new javax.swing.JLabel();
+        PHDAdd_TF = new javax.swing.JTextField();
+        CPN_JLB = new javax.swing.JLabel();
+        DPNAdd_JLB = new javax.swing.JLabel();
+        InvNumADD_JLB = new javax.swing.JLabel();
+        InvNumAdd_TF = new javax.swing.JTextField();
+        InvNameAdd_JLB = new javax.swing.JLabel();
+        InvNameAdd_TF = new javax.swing.JTextField();
+        InvModelAdd_JLB = new javax.swing.JLabel();
+        InvModelAdd_TF = new javax.swing.JTextField();
+        InvQuantityAdd_JLB = new javax.swing.JLabel();
+        InvQuantity_TF = new javax.swing.JTextField();
+        locationAdd_JLB = new javax.swing.JLabel();
+        locationAdd_TF = new javax.swing.JTextField();
+        RemarkAdd_JLB = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        RemarkAdd_TA = new javax.swing.JTextArea();
+        keeperAdd_JLB = new javax.swing.JLabel();
+        keeperAdd_TF = new javax.swing.JTextField();
+        NewInvAdd_btn = new javax.swing.JButton();
+        CPN_Add = new javax.swing.JComboBox<>();
+        DPN_Add = new javax.swing.JComboBox<>();
+        NewInvAdd_cancel_btn = new javax.swing.JButton();
+        SelectInvCode_JLB1 = new javax.swing.JLabel();
+        queryResult_JPL = new javax.swing.JPanel();
+        CheckInvNum_TF = new javax.swing.JTextField();
+        CheckInvNum_JLB = new javax.swing.JLabel();
+        ChecnInvNum_JLB = new javax.swing.JLabel();
+        NewInvNum_TF = new javax.swing.JTextField();
+        NewInvNum_JLB = new javax.swing.JLabel();
+        invNumSendToAdd_btn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         queryInvList_btn = new javax.swing.JButton();
-        modifyInvItem_btn = new javax.swing.JButton();
         addInvItem_btn = new javax.swing.JButton();
-        scrappedInvItem_btn = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
+        InvList_JPL = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         inv_List_Table = new javax.swing.JTable();
+        invInfo_JPL = new javax.swing.JPanel();
+        invInfo_Num_JBL = new javax.swing.JLabel();
+        invInfo_Num_TF = new javax.swing.JTextField();
+        invInfo_Com_JBL = new javax.swing.JLabel();
+        invInfo_Com_TF = new javax.swing.JTextField();
+        invInfo_Dep_JBL = new javax.swing.JLabel();
+        invInfo_Dep_TF = new javax.swing.JTextField();
+        invInfo_Kep_JBL = new javax.swing.JLabel();
+        invInfo_Kep_TF = new javax.swing.JTextField();
+        invInfo_PHD_JBL = new javax.swing.JLabel();
+        invInfo_PHD_TF = new javax.swing.JTextField();
+        invInfo_Name_JBL = new javax.swing.JLabel();
+        invInfo_Name_TF = new javax.swing.JTextField();
+        invInfo_Model_JBL = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        invInfo_Model_TA = new javax.swing.JTextArea();
+        invInfo_Remark_JBL = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        invInfo_Remark_TA = new javax.swing.JTextArea();
+        Invinfo_Option_JPL = new javax.swing.JPanel();
+        scrappedInvItem_btn = new javax.swing.JButton();
+        modifyInvItem_btn = new javax.swing.JButton();
 
         errMsg_jDialog.setFont(new java.awt.Font("標楷體", 0, 16)); // NOI18N
         errMsg_jDialog.setLocation(new java.awt.Point(0, 0));
@@ -119,439 +174,811 @@ public class inventoryListUI extends javax.swing.JFrame {
 
         modifyInvItem_JFrame.setResizable(false);
 
-        jLabel2.setFont(new java.awt.Font("標楷體", 1, 24)); // NOI18N
-        jLabel2.setText("詳細資料");
+        InvMod_JBL.setFont(new java.awt.Font("標楷體", 1, 24)); // NOI18N
+        InvMod_JBL.setText("詳細資料");
 
-        jPanel3.setPreferredSize(new java.awt.Dimension(150, 30));
+        InvInfoMod_JBL.setPreferredSize(new java.awt.Dimension(150, 30));
 
-        purchase_jLabel.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
-        purchase_jLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        purchase_jLabel.setText("購入日期");
-        purchase_jLabel.setMaximumSize(new java.awt.Dimension(200, 30));
-        purchase_jLabel.setPreferredSize(new java.awt.Dimension(100, 30));
+        PHDMod_JBL.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        PHDMod_JBL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        PHDMod_JBL.setText("購入日期");
+        PHDMod_JBL.setMaximumSize(new java.awt.Dimension(200, 30));
+        PHDMod_JBL.setPreferredSize(new java.awt.Dimension(100, 30));
 
-        purchase_jTextField.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
-        purchase_jTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        purchase_jTextField.setPreferredSize(new java.awt.Dimension(150, 30));
+        PHDMod_TF.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        PHDMod_TF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        PHDMod_TF.setPreferredSize(new java.awt.Dimension(150, 30));
 
-        comName_jLabel.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
-        comName_jLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        comName_jLabel.setText("公司別");
-        comName_jLabel.setMaximumSize(new java.awt.Dimension(200, 30));
-        comName_jLabel.setPreferredSize(new java.awt.Dimension(100, 30));
+        CPNMod_JBL.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        CPNMod_JBL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        CPNMod_JBL.setText("公司別");
+        CPNMod_JBL.setMaximumSize(new java.awt.Dimension(200, 30));
+        CPNMod_JBL.setPreferredSize(new java.awt.Dimension(100, 30));
 
-        comName_jTextField.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
-        comName_jTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        comName_jTextField.setPreferredSize(new java.awt.Dimension(200, 30));
+        CPNMod_TF.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        CPNMod_TF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        CPNMod_TF.setPreferredSize(new java.awt.Dimension(200, 30));
 
-        depart_jLabel.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
-        depart_jLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        depart_jLabel.setText("歸屬部門");
-        depart_jLabel.setMaximumSize(new java.awt.Dimension(200, 30));
-        depart_jLabel.setPreferredSize(new java.awt.Dimension(100, 30));
+        DPMod_JLB.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        DPMod_JLB.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        DPMod_JLB.setText("歸屬部門");
+        DPMod_JLB.setMaximumSize(new java.awt.Dimension(200, 30));
+        DPMod_JLB.setPreferredSize(new java.awt.Dimension(100, 30));
 
-        depart_jTextField.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
-        depart_jTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        depart_jTextField.setPreferredSize(new java.awt.Dimension(200, 30));
+        DPMod_TF.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        DPMod_TF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        DPMod_TF.setPreferredSize(new java.awt.Dimension(200, 30));
 
-        invNum_jLabel.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
-        invNum_jLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        invNum_jLabel.setText("財產編號");
-        invNum_jLabel.setMaximumSize(new java.awt.Dimension(200, 30));
-        invNum_jLabel.setPreferredSize(new java.awt.Dimension(100, 30));
+        INMod_JLB.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        INMod_JLB.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        INMod_JLB.setText("財產編號");
+        INMod_JLB.setMaximumSize(new java.awt.Dimension(200, 30));
+        INMod_JLB.setPreferredSize(new java.awt.Dimension(100, 30));
 
-        invNum_jTextField.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
-        invNum_jTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        invNum_jTextField.setPreferredSize(new java.awt.Dimension(350, 30));
+        INMod_TF.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        INMod_TF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        INMod_TF.setPreferredSize(new java.awt.Dimension(350, 30));
 
-        invName_jLabel.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
-        invName_jLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        invName_jLabel.setText("財產名稱");
-        invName_jLabel.setMaximumSize(new java.awt.Dimension(200, 30));
-        invName_jLabel.setPreferredSize(new java.awt.Dimension(100, 30));
+        INMMod_JBL.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        INMMod_JBL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        INMMod_JBL.setText("財產名稱");
+        INMMod_JBL.setMaximumSize(new java.awt.Dimension(200, 30));
+        INMMod_JBL.setPreferredSize(new java.awt.Dimension(100, 30));
 
-        invName_jTextField.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
-        invName_jTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        invName_jTextField.setPreferredSize(new java.awt.Dimension(600, 30));
+        INMMod_TF.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        INMMod_TF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        INMMod_TF.setPreferredSize(new java.awt.Dimension(600, 30));
 
-        invModel_jLabel.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
-        invModel_jLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        invModel_jLabel.setText("規格型號");
-        invModel_jLabel.setMaximumSize(new java.awt.Dimension(200, 30));
-        invModel_jLabel.setPreferredSize(new java.awt.Dimension(100, 30));
+        IMDMod_JBL.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        IMDMod_JBL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        IMDMod_JBL.setText("規格型號");
+        IMDMod_JBL.setMaximumSize(new java.awt.Dimension(200, 30));
+        IMDMod_JBL.setPreferredSize(new java.awt.Dimension(100, 30));
 
-        invModel_jTextField.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
-        invModel_jTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        invModel_jTextField.setPreferredSize(new java.awt.Dimension(600, 30));
+        IMDMod_TF.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        IMDMod_TF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        IMDMod_TF.setPreferredSize(new java.awt.Dimension(600, 30));
 
-        invQuantity_jLabel.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
-        invQuantity_jLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        invQuantity_jLabel.setText("數量");
-        invQuantity_jLabel.setMaximumSize(new java.awt.Dimension(200, 30));
-        invQuantity_jLabel.setPreferredSize(new java.awt.Dimension(100, 30));
+        IQTMod_JBL.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        IQTMod_JBL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        IQTMod_JBL.setText("數量");
+        IQTMod_JBL.setMaximumSize(new java.awt.Dimension(200, 30));
+        IQTMod_JBL.setPreferredSize(new java.awt.Dimension(100, 30));
 
-        invQuantity_jTextField.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
-        invQuantity_jTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        invQuantity_jTextField.setPreferredSize(new java.awt.Dimension(50, 30));
+        IQTMod_TF.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        IQTMod_TF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        IQTMod_TF.setPreferredSize(new java.awt.Dimension(50, 30));
 
-        location_jLabel.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
-        location_jLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        location_jLabel.setText("所在地");
-        location_jLabel.setMaximumSize(new java.awt.Dimension(200, 30));
-        location_jLabel.setPreferredSize(new java.awt.Dimension(100, 30));
+        LCMod_JBL.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        LCMod_JBL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LCMod_JBL.setText("所在地");
+        LCMod_JBL.setMaximumSize(new java.awt.Dimension(200, 30));
+        LCMod_JBL.setPreferredSize(new java.awt.Dimension(100, 30));
 
-        location_jTextField.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
-        location_jTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        location_jTextField.setPreferredSize(new java.awt.Dimension(350, 30));
+        LCMod_TF.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        LCMod_TF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        LCMod_TF.setPreferredSize(new java.awt.Dimension(350, 30));
 
-        remark_jLabel.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
-        remark_jLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        remark_jLabel.setText("備註");
-        remark_jLabel.setMaximumSize(new java.awt.Dimension(200, 30));
-        remark_jLabel.setPreferredSize(new java.awt.Dimension(100, 30));
+        RMMod_JBL.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        RMMod_JBL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        RMMod_JBL.setText("備註");
+        RMMod_JBL.setMaximumSize(new java.awt.Dimension(200, 30));
+        RMMod_JBL.setPreferredSize(new java.awt.Dimension(100, 30));
 
-        remark_jTextArea.setColumns(20);
-        remark_jTextArea.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
-        remark_jTextArea.setRows(5);
-        remark_jTextArea.setPreferredSize(new java.awt.Dimension(600, 300));
-        jScrollPane2.setViewportView(remark_jTextArea);
+        RMMod_TA.setColumns(20);
+        RMMod_TA.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        RMMod_TA.setRows(5);
+        RMMod_TA.setPreferredSize(new java.awt.Dimension(600, 300));
+        RMMod_JSP.setViewportView(RMMod_TA);
 
-        keeper_jLabel.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
-        keeper_jLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        keeper_jLabel.setText("保管人");
-        keeper_jLabel.setMaximumSize(new java.awt.Dimension(200, 30));
-        keeper_jLabel.setPreferredSize(new java.awt.Dimension(100, 30));
+        KPMod_JLB.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        KPMod_JLB.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        KPMod_JLB.setText("保管人");
+        KPMod_JLB.setMaximumSize(new java.awt.Dimension(200, 30));
+        KPMod_JLB.setPreferredSize(new java.awt.Dimension(100, 30));
 
-        keeper_jTextField.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
-        keeper_jTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        keeper_jTextField.setPreferredSize(new java.awt.Dimension(150, 30));
+        KPMod_TF.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        KPMod_TF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        KPMod_TF.setPreferredSize(new java.awt.Dimension(150, 30));
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout InvInfoMod_JBLLayout = new javax.swing.GroupLayout(InvInfoMod_JBL);
+        InvInfoMod_JBL.setLayout(InvInfoMod_JBLLayout);
+        InvInfoMod_JBLLayout.setHorizontalGroup(
+            InvInfoMod_JBLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(InvInfoMod_JBLLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(comName_jLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(InvInfoMod_JBLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(InvInfoMod_JBLLayout.createSequentialGroup()
+                        .addComponent(CPNMod_JBL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comName_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(CPNMod_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(110, 110, 110)
-                        .addComponent(depart_jLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(DPMod_JLB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(depart_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel3Layout.createSequentialGroup()
-                            .addComponent(location_jLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(DPMod_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(InvInfoMod_JBLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(InvInfoMod_JBLLayout.createSequentialGroup()
+                            .addComponent(LCMod_JBL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(location_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(LCMod_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(keeper_jLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(KPMod_JLB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(keeper_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel3Layout.createSequentialGroup()
-                            .addComponent(invName_jLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(KPMod_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(InvInfoMod_JBLLayout.createSequentialGroup()
+                            .addComponent(INMMod_JBL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(invName_jTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(jPanel3Layout.createSequentialGroup()
-                            .addComponent(invModel_jLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(INMMod_TF, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(InvInfoMod_JBLLayout.createSequentialGroup()
+                            .addComponent(IMDMod_JBL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(invModel_jTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(jPanel3Layout.createSequentialGroup()
-                            .addComponent(invQuantity_jLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(IMDMod_TF, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(InvInfoMod_JBLLayout.createSequentialGroup()
+                            .addComponent(IQTMod_JBL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(invQuantity_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel3Layout.createSequentialGroup()
-                            .addComponent(invNum_jLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(IQTMod_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(InvInfoMod_JBLLayout.createSequentialGroup()
+                            .addComponent(INMod_JLB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(invNum_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(INMod_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(purchase_jLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(PHDMod_JBL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(purchase_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel3Layout.createSequentialGroup()
-                            .addComponent(remark_jLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(PHDMod_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(InvInfoMod_JBLLayout.createSequentialGroup()
+                            .addComponent(RMMod_JBL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jScrollPane2))))
+                            .addComponent(RMMod_JSP))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(invNum_jLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(invNum_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(purchase_jLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(purchase_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        InvInfoMod_JBLLayout.setVerticalGroup(
+            InvInfoMod_JBLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(InvInfoMod_JBLLayout.createSequentialGroup()
+                .addGroup(InvInfoMod_JBLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(INMod_JLB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(INMod_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(PHDMod_JBL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(PHDMod_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(9, 9, 9)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(comName_jLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comName_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(depart_jLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(depart_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(InvInfoMod_JBLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(CPNMod_JBL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CPNMod_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(DPMod_JLB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(DPMod_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(location_jLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(location_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(keeper_jLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(keeper_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(InvInfoMod_JBLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(LCMod_JBL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(LCMod_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(KPMod_JLB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(KPMod_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(invName_jLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(invName_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(InvInfoMod_JBLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(INMMod_JBL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(INMMod_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(invModel_jLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(invModel_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(InvInfoMod_JBLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(IMDMod_JBL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(IMDMod_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(invQuantity_jLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(invQuantity_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(InvInfoMod_JBLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(IQTMod_JBL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(IQTMod_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(remark_jLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(InvInfoMod_JBLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(InvInfoMod_JBLLayout.createSequentialGroup()
+                        .addComponent(RMMod_JBL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(RMMod_JSP, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
-        jButton1.setFont(new java.awt.Font("標楷體", 1, 16)); // NOI18N
-        jButton1.setText("取消");
+        InvModCancel.setFont(new java.awt.Font("標楷體", 1, 16)); // NOI18N
+        InvModCancel.setText("取消");
 
-        jButton2.setFont(new java.awt.Font("標楷體", 1, 16)); // NOI18N
-        jButton2.setText("修改");
-        jButton2.setPreferredSize(new java.awt.Dimension(80, 30));
+        InvModSend.setFont(new java.awt.Font("標楷體", 1, 16)); // NOI18N
+        InvModSend.setText("修改");
+        InvModSend.setPreferredSize(new java.awt.Dimension(80, 30));
 
-        InvID_jLabel.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
-        InvID_jLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        InvID_jLabel.setText("ID");
-        InvID_jLabel.setMaximumSize(new java.awt.Dimension(200, 30));
-        InvID_jLabel.setPreferredSize(new java.awt.Dimension(150, 30));
+        InvModID_JBL.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        InvModID_JBL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        InvModID_JBL.setText("ID");
+        InvModID_JBL.setMaximumSize(new java.awt.Dimension(200, 30));
+        InvModID_JBL.setPreferredSize(new java.awt.Dimension(150, 30));
 
-        invID_jTextField.setEditable(false);
-        invID_jTextField.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
-        invID_jTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        invID_jTextField.setBorder(null);
-        invID_jTextField.setPreferredSize(new java.awt.Dimension(600, 30));
+        InvModID_TF.setEditable(false);
+        InvModID_TF.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        InvModID_TF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        InvModID_TF.setBorder(null);
+        InvModID_TF.setPreferredSize(new java.awt.Dimension(600, 30));
 
         javax.swing.GroupLayout modifyInvItem_JFrameLayout = new javax.swing.GroupLayout(modifyInvItem_JFrame.getContentPane());
         modifyInvItem_JFrame.getContentPane().setLayout(modifyInvItem_JFrameLayout);
         modifyInvItem_JFrameLayout.setHorizontalGroup(
             modifyInvItem_JFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
             .addGroup(modifyInvItem_JFrameLayout.createSequentialGroup()
+                .addGap(330, 330, 330)
                 .addGroup(modifyInvItem_JFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(modifyInvItem_JFrameLayout.createSequentialGroup()
-                        .addGap(366, 366, 366)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(InvID_jLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, modifyInvItem_JFrameLayout.createSequentialGroup()
+                        .addComponent(InvMod_JBL)
+                        .addGap(113, 113, 113)
+                        .addComponent(InvModID_JBL, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(invID_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(modifyInvItem_JFrameLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)
+                        .addComponent(InvModID_TF, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, modifyInvItem_JFrameLayout.createSequentialGroup()
+                        .addComponent(InvModCancel)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(InvModSend, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(71, 71, 71))
+            .addGroup(modifyInvItem_JFrameLayout.createSequentialGroup()
+                .addComponent(InvInfoMod_JBL, javax.swing.GroupLayout.PREFERRED_SIZE, 736, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         modifyInvItem_JFrameLayout.setVerticalGroup(
             modifyInvItem_JFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(modifyInvItem_JFrameLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(modifyInvItem_JFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(InvID_jLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(invID_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(InvMod_JBL)
+                    .addComponent(InvModID_JBL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(InvModID_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE)
+                .addComponent(InvInfoMod_JBL, javax.swing.GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(modifyInvItem_JFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(InvModSend, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(InvModCancel))
                 .addGap(14, 14, 14))
         );
 
-        addInvItem_jFrame.setPreferredSize(new java.awt.Dimension(800, 600));
         addInvItem_jFrame.setResizable(false);
 
-        jPanel4.setPreferredSize(new java.awt.Dimension(800, 600));
+        jPanel4.setPreferredSize(new java.awt.Dimension(1200, 600));
 
-        jLabel3.setFont(new java.awt.Font("標楷體", 1, 24)); // NOI18N
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("新增");
-        jLabel3.setMaximumSize(new java.awt.Dimension(100, 30));
-        jLabel3.setMinimumSize(new java.awt.Dimension(100, 30));
-        jLabel3.setPreferredSize(new java.awt.Dimension(100, 30));
+        AddInvData_JLB.setFont(new java.awt.Font("標楷體", 1, 24)); // NOI18N
+        AddInvData_JLB.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        AddInvData_JLB.setText("資產資料建立");
+        AddInvData_JLB.setMaximumSize(new java.awt.Dimension(100, 30));
+        AddInvData_JLB.setMinimumSize(new java.awt.Dimension(100, 30));
+        AddInvData_JLB.setPreferredSize(new java.awt.Dimension(200, 30));
 
-        AssetClass_jComboBox.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
-        AssetClass_jComboBox.setPreferredSize(new java.awt.Dimension(180, 30));
+        Check_JPL.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        AssetClass_jLabel.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
-        AssetClass_jLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        AssetClass_jLabel.setText("資產分類");
-        AssetClass_jLabel.setMaximumSize(new java.awt.Dimension(100, 30));
-        AssetClass_jLabel.setMinimumSize(new java.awt.Dimension(100, 30));
-        AssetClass_jLabel.setPreferredSize(new java.awt.Dimension(100, 30));
+        AssetClass_JLB.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        AssetClass_JLB.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        AssetClass_JLB.setText("資產分類");
+        AssetClass_JLB.setMaximumSize(new java.awt.Dimension(100, 30));
+        AssetClass_JLB.setMinimumSize(new java.awt.Dimension(100, 30));
+        AssetClass_JLB.setPreferredSize(new java.awt.Dimension(100, 30));
 
-        ComCode_jLabel.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
-        ComCode_jLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        ComCode_jLabel.setText("公司別");
-        ComCode_jLabel.setMaximumSize(new java.awt.Dimension(100, 30));
-        ComCode_jLabel.setMinimumSize(new java.awt.Dimension(100, 30));
-        ComCode_jLabel.setPreferredSize(new java.awt.Dimension(100, 30));
+        ComCode_JLB.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        ComCode_JLB.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        ComCode_JLB.setText("公司別");
+        ComCode_JLB.setMaximumSize(new java.awt.Dimension(100, 30));
+        ComCode_JLB.setMinimumSize(new java.awt.Dimension(100, 30));
+        ComCode_JLB.setPreferredSize(new java.awt.Dimension(100, 30));
 
-        ComCode_jComboBox.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
-        ComCode_jComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1 休閒", "2 益合", "3 富士(上海)", "4 富士(廣州)", "5 藝禾", "6 鮮匯" }));
-        ComCode_jComboBox.setPreferredSize(new java.awt.Dimension(180, 30));
+        AccSub_JLB.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        AccSub_JLB.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        AccSub_JLB.setText("會計科目");
+        AccSub_JLB.setMaximumSize(new java.awt.Dimension(100, 30));
+        AccSub_JLB.setMinimumSize(new java.awt.Dimension(100, 30));
+        AccSub_JLB.setPreferredSize(new java.awt.Dimension(100, 30));
 
-        Accounting_jLabel.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
-        Accounting_jLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Accounting_jLabel.setText("會計科目");
-        Accounting_jLabel.setMaximumSize(new java.awt.Dimension(100, 30));
-        Accounting_jLabel.setMinimumSize(new java.awt.Dimension(100, 30));
-        Accounting_jLabel.setPreferredSize(new java.awt.Dimension(100, 30));
+        ClassCode_JLB.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        ClassCode_JLB.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        ClassCode_JLB.setText("分類代碼");
+        ClassCode_JLB.setMaximumSize(new java.awt.Dimension(100, 30));
+        ClassCode_JLB.setMinimumSize(new java.awt.Dimension(100, 30));
+        ClassCode_JLB.setPreferredSize(new java.awt.Dimension(100, 30));
 
-        Accounting_jComboBox.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
-        Accounting_jComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "501 土地", "502 房屋及建築", "531 機器設備", "551 運輸設備", "561 辦公設備", "631 租賃改良", "681 其他設備" }));
-        Accounting_jComboBox.setPreferredSize(new java.awt.Dimension(180, 30));
-
-        ClassCode_jLabel.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
-        ClassCode_jLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        ClassCode_jLabel.setText("分類代碼");
-        ClassCode_jLabel.setMaximumSize(new java.awt.Dimension(100, 30));
-        ClassCode_jLabel.setMinimumSize(new java.awt.Dimension(100, 30));
-        ClassCode_jLabel.setPreferredSize(new java.awt.Dimension(100, 30));
-
-        ClassCode_jComboBox.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
-        ClassCode_jComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "11 土地", "21 房屋及建築", "22 房屋附屬設備", "31 研發設備", "32 倉儲設備", "33 模具", "34 生產設備", "35 生產附屬設備", "41 公務轎車", "42 公務貨車", "43 運輸設備附屬設備", "44 其他運輸設備", "51 事務機器", "52 電話系統", "53 電腦主機", "54 桌上型電腦設備", "55 攜帶型電腦設備", "56 其他電腦硬體設備", "57 視聽設備", "61 裝修工程", "62 維修工程", "71 屏風", "72 藝術家飾", "73 中央空調、冷氣機", "74 家電", "75 安全管理設備", "76 消防設備", "77 雜項購置", "78 椅", "79 桌", "80 櫥櫃" }));
-        ClassCode_jComboBox.setPreferredSize(new java.awt.Dimension(180, 30));
-
-        invCheck_btn.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
-        invCheck_btn.setText("檢查");
-        invCheck_btn.setMaximumSize(new java.awt.Dimension(100, 30));
-        invCheck_btn.setMinimumSize(new java.awt.Dimension(100, 30));
-        invCheck_btn.setPreferredSize(new java.awt.Dimension(100, 30));
-        invCheck_btn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                invCheck_btnMouseClicked(evt);
+        ClassCode_Check.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        ClassCode_Check.setPreferredSize(new java.awt.Dimension(180, 30));
+        ClassCode_Check.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ClassCode_CheckItemStateChanged(evt);
             }
         });
 
-        InvCode_TF.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
-        InvCode_TF.setPreferredSize(new java.awt.Dimension(100, 30));
+        AccSub_Check.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        AccSub_Check.setPreferredSize(new java.awt.Dimension(180, 30));
+        AccSub_Check.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                AccSub_CheckItemStateChanged(evt);
+            }
+        });
 
-        assetClass_BG.add(ac1_RB);
-        ac1_RB.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
-        ac1_RB.setSelected(true);
-        ac1_RB.setText("列帳");
-        ac1_RB.setToolTipText("");
-        ac1_RB.setMaximumSize(new java.awt.Dimension(180, 30));
-        ac1_RB.setMinimumSize(new java.awt.Dimension(180, 30));
-        ac1_RB.setName("1"); // NOI18N
-        ac1_RB.setPreferredSize(new java.awt.Dimension(180, 30));
+        ComCode_Check.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        ComCode_Check.setPreferredSize(new java.awt.Dimension(180, 30));
+        ComCode_Check.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ComCode_CheckItemStateChanged(evt);
+            }
+        });
 
-        assetClass_BG.add(ac2_RB);
-        ac2_RB.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
-        ac2_RB.setText("列管");
-        ac2_RB.setMaximumSize(new java.awt.Dimension(180, 30));
-        ac2_RB.setMinimumSize(new java.awt.Dimension(180, 30));
-        ac2_RB.setName("2"); // NOI18N
-        ac2_RB.setPreferredSize(new java.awt.Dimension(180, 30));
+        AssetClass_Check.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        AssetClass_Check.setPreferredSize(new java.awt.Dimension(180, 30));
+        AssetClass_Check.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                AssetClass_CheckItemStateChanged(evt);
+            }
+        });
 
-        AssetClass_TF.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
-        AssetClass_TF.setPreferredSize(new java.awt.Dimension(100, 30));
+        invQuery_btn.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        invQuery_btn.setText("確認");
+        invQuery_btn.setMaximumSize(new java.awt.Dimension(100, 30));
+        invQuery_btn.setMinimumSize(new java.awt.Dimension(100, 30));
+        invQuery_btn.setPreferredSize(new java.awt.Dimension(100, 30));
+        invQuery_btn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                invQuery_btnMouseClicked(evt);
+            }
+        });
 
-        ComCode_TF.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
-        ComCode_TF.setPreferredSize(new java.awt.Dimension(100, 30));
+        ACNum_JLB.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        ACNum_JLB.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        ACNum_JLB.setText("1");
+        ACNum_JLB.setMaximumSize(new java.awt.Dimension(10, 30));
+        ACNum_JLB.setMinimumSize(new java.awt.Dimension(10, 30));
+        ACNum_JLB.setPreferredSize(new java.awt.Dimension(60, 30));
 
-        Accounting_TF.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
-        Accounting_TF.setPreferredSize(new java.awt.Dimension(100, 30));
+        CPCNum_JLB.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        CPCNum_JLB.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        CPCNum_JLB.setText("2");
+        CPCNum_JLB.setPreferredSize(new java.awt.Dimension(60, 30));
+        CPCNum_JLB.setRequestFocusEnabled(false);
+        CPCNum_JLB.setVerifyInputWhenFocusTarget(false);
 
-        ClassCode_TF.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
-        ClassCode_TF.setPreferredSize(new java.awt.Dimension(100, 30));
+        ASNum_JLB.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        ASNum_JLB.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        ASNum_JLB.setText("3");
+        ASNum_JLB.setMaximumSize(new java.awt.Dimension(9, 30));
+        ASNum_JLB.setMinimumSize(new java.awt.Dimension(9, 30));
+        ASNum_JLB.setPreferredSize(new java.awt.Dimension(60, 30));
+
+        CLCNum_JLB.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        CLCNum_JLB.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        CLCNum_JLB.setText("4");
+        CLCNum_JLB.setMaximumSize(new java.awt.Dimension(9, 30));
+        CLCNum_JLB.setMinimumSize(new java.awt.Dimension(9, 30));
+        CLCNum_JLB.setPreferredSize(new java.awt.Dimension(60, 30));
+        CLCNum_JLB.setRequestFocusEnabled(false);
+        CLCNum_JLB.setVerifyInputWhenFocusTarget(false);
+
+        SelectInvCode_JLB.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        SelectInvCode_JLB.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        SelectInvCode_JLB.setText("1.選定資產類別");
+        SelectInvCode_JLB.setMaximumSize(new java.awt.Dimension(140, 23));
+        SelectInvCode_JLB.setPreferredSize(new java.awt.Dimension(140, 30));
+
+        javax.swing.GroupLayout Check_JPLLayout = new javax.swing.GroupLayout(Check_JPL);
+        Check_JPL.setLayout(Check_JPLLayout);
+        Check_JPLLayout.setHorizontalGroup(
+            Check_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Check_JPLLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(Check_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Check_JPLLayout.createSequentialGroup()
+                        .addComponent(ACNum_JLB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(CPCNum_JLB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ASNum_JLB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(CLCNum_JLB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(invQuery_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(Check_JPLLayout.createSequentialGroup()
+                        .addGroup(Check_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ComCode_JLB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(AssetClass_JLB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(Check_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(Check_JPLLayout.createSequentialGroup()
+                                .addComponent(SelectInvCode_JLB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(ComCode_Check, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(AssetClass_Check, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(Check_JPLLayout.createSequentialGroup()
+                        .addGroup(Check_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(AccSub_JLB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ClassCode_JLB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(Check_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ClassCode_Check, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(AccSub_Check, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap())
+        );
+        Check_JPLLayout.setVerticalGroup(
+            Check_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Check_JPLLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(SelectInvCode_JLB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addGroup(Check_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(AssetClass_Check, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(AssetClass_JLB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(Check_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ComCode_Check, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ComCode_JLB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(Check_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(AccSub_Check, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(AccSub_JLB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(Check_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ClassCode_Check, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ClassCode_JLB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(Check_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(invQuery_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ACNum_JLB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CPCNum_JLB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ASNum_JLB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CLCNum_JLB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
+        NumInvAdd_JPL.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        PHDAdd_JLB.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        PHDAdd_JLB.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        PHDAdd_JLB.setText("購入日期");
+        PHDAdd_JLB.setMaximumSize(new java.awt.Dimension(200, 30));
+        PHDAdd_JLB.setPreferredSize(new java.awt.Dimension(100, 30));
+
+        PHDAdd_TF.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        PHDAdd_TF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        PHDAdd_TF.setPreferredSize(new java.awt.Dimension(150, 30));
+
+        CPN_JLB.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        CPN_JLB.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        CPN_JLB.setText("公司別");
+        CPN_JLB.setMaximumSize(new java.awt.Dimension(200, 30));
+        CPN_JLB.setPreferredSize(new java.awt.Dimension(100, 30));
+
+        DPNAdd_JLB.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        DPNAdd_JLB.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        DPNAdd_JLB.setText("歸屬部門");
+        DPNAdd_JLB.setMaximumSize(new java.awt.Dimension(200, 30));
+        DPNAdd_JLB.setPreferredSize(new java.awt.Dimension(100, 30));
+
+        InvNumADD_JLB.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        InvNumADD_JLB.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        InvNumADD_JLB.setText("財產編號");
+        InvNumADD_JLB.setMaximumSize(new java.awt.Dimension(200, 30));
+        InvNumADD_JLB.setPreferredSize(new java.awt.Dimension(100, 30));
+
+        InvNumAdd_TF.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        InvNumAdd_TF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        InvNumAdd_TF.setPreferredSize(new java.awt.Dimension(180, 30));
+
+        InvNameAdd_JLB.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        InvNameAdd_JLB.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        InvNameAdd_JLB.setText("財產名稱");
+        InvNameAdd_JLB.setMaximumSize(new java.awt.Dimension(200, 30));
+        InvNameAdd_JLB.setPreferredSize(new java.awt.Dimension(100, 30));
+
+        InvNameAdd_TF.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        InvNameAdd_TF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        InvNameAdd_TF.setPreferredSize(new java.awt.Dimension(600, 30));
+
+        InvModelAdd_JLB.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        InvModelAdd_JLB.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        InvModelAdd_JLB.setText("規格型號");
+        InvModelAdd_JLB.setMaximumSize(new java.awt.Dimension(200, 30));
+        InvModelAdd_JLB.setPreferredSize(new java.awt.Dimension(100, 30));
+
+        InvModelAdd_TF.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        InvModelAdd_TF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        InvModelAdd_TF.setPreferredSize(new java.awt.Dimension(600, 30));
+
+        InvQuantityAdd_JLB.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        InvQuantityAdd_JLB.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        InvQuantityAdd_JLB.setText("數量");
+        InvQuantityAdd_JLB.setMaximumSize(new java.awt.Dimension(200, 30));
+        InvQuantityAdd_JLB.setPreferredSize(new java.awt.Dimension(100, 30));
+
+        InvQuantity_TF.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        InvQuantity_TF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        InvQuantity_TF.setText("1");
+        InvQuantity_TF.setPreferredSize(new java.awt.Dimension(50, 30));
+
+        locationAdd_JLB.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        locationAdd_JLB.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        locationAdd_JLB.setText("所在地");
+        locationAdd_JLB.setMaximumSize(new java.awt.Dimension(200, 30));
+        locationAdd_JLB.setPreferredSize(new java.awt.Dimension(100, 30));
+
+        locationAdd_TF.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        locationAdd_TF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        locationAdd_TF.setPreferredSize(new java.awt.Dimension(350, 30));
+
+        RemarkAdd_JLB.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        RemarkAdd_JLB.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        RemarkAdd_JLB.setText("備註");
+        RemarkAdd_JLB.setMaximumSize(new java.awt.Dimension(200, 30));
+        RemarkAdd_JLB.setPreferredSize(new java.awt.Dimension(100, 30));
+
+        RemarkAdd_TA.setColumns(20);
+        RemarkAdd_TA.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        RemarkAdd_TA.setRows(5);
+        RemarkAdd_TA.setPreferredSize(new java.awt.Dimension(600, 300));
+        jScrollPane3.setViewportView(RemarkAdd_TA);
+
+        keeperAdd_JLB.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        keeperAdd_JLB.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        keeperAdd_JLB.setText("保管人");
+        keeperAdd_JLB.setMaximumSize(new java.awt.Dimension(200, 30));
+        keeperAdd_JLB.setPreferredSize(new java.awt.Dimension(100, 30));
+
+        keeperAdd_TF.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        keeperAdd_TF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        keeperAdd_TF.setPreferredSize(new java.awt.Dimension(150, 30));
+
+        NewInvAdd_btn.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        NewInvAdd_btn.setText("新增");
+        NewInvAdd_btn.setMaximumSize(new java.awt.Dimension(100, 30));
+        NewInvAdd_btn.setMinimumSize(new java.awt.Dimension(100, 30));
+        NewInvAdd_btn.setPreferredSize(new java.awt.Dimension(100, 30));
+        NewInvAdd_btn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                NewInvAdd_btnMouseClicked(evt);
+            }
+        });
+
+        CPN_Add.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        CPN_Add.setPreferredSize(new java.awt.Dimension(100, 30));
+
+        DPN_Add.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        DPN_Add.setPreferredSize(new java.awt.Dimension(200, 30));
+
+        NewInvAdd_cancel_btn.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        NewInvAdd_cancel_btn.setText("取消");
+        NewInvAdd_cancel_btn.setMaximumSize(new java.awt.Dimension(100, 30));
+        NewInvAdd_cancel_btn.setMinimumSize(new java.awt.Dimension(100, 30));
+        NewInvAdd_cancel_btn.setPreferredSize(new java.awt.Dimension(100, 30));
+        NewInvAdd_cancel_btn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                NewInvAdd_cancel_btnMouseClicked(evt);
+            }
+        });
+
+        SelectInvCode_JLB1.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        SelectInvCode_JLB1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        SelectInvCode_JLB1.setText("3.選定資產類別");
+        SelectInvCode_JLB1.setToolTipText("");
+        SelectInvCode_JLB1.setMaximumSize(new java.awt.Dimension(140, 23));
+        SelectInvCode_JLB1.setPreferredSize(new java.awt.Dimension(140, 30));
+
+        javax.swing.GroupLayout NumInvAdd_JPLLayout = new javax.swing.GroupLayout(NumInvAdd_JPL);
+        NumInvAdd_JPL.setLayout(NumInvAdd_JPLLayout);
+        NumInvAdd_JPLLayout.setHorizontalGroup(
+            NumInvAdd_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, NumInvAdd_JPLLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(SelectInvCode_JLB1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(329, 329, 329))
+            .addGroup(NumInvAdd_JPLLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(NumInvAdd_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(NumInvAdd_JPLLayout.createSequentialGroup()
+                        .addComponent(NewInvAdd_cancel_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(NewInvAdd_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(NumInvAdd_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(NumInvAdd_JPLLayout.createSequentialGroup()
+                            .addComponent(RemarkAdd_JLB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jScrollPane3))
+                        .addGroup(NumInvAdd_JPLLayout.createSequentialGroup()
+                            .addComponent(InvModelAdd_JLB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(InvModelAdd_TF, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(NumInvAdd_JPLLayout.createSequentialGroup()
+                            .addComponent(InvNameAdd_JLB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(InvNameAdd_TF, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(NumInvAdd_JPLLayout.createSequentialGroup()
+                            .addComponent(InvQuantityAdd_JLB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(InvQuantity_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(NumInvAdd_JPLLayout.createSequentialGroup()
+                            .addComponent(locationAdd_JLB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(locationAdd_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(NumInvAdd_JPLLayout.createSequentialGroup()
+                            .addGroup(NumInvAdd_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(NumInvAdd_JPLLayout.createSequentialGroup()
+                                    .addComponent(CPN_JLB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(CPN_Add, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(DPNAdd_JLB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(DPN_Add, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(NumInvAdd_JPLLayout.createSequentialGroup()
+                                    .addComponent(InvNumADD_JLB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(InvNumAdd_TF, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(NumInvAdd_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(NumInvAdd_JPLLayout.createSequentialGroup()
+                                    .addComponent(PHDAdd_JLB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(PHDAdd_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(NumInvAdd_JPLLayout.createSequentialGroup()
+                                    .addComponent(keeperAdd_JLB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(keeperAdd_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addContainerGap(20, Short.MAX_VALUE))
+        );
+        NumInvAdd_JPLLayout.setVerticalGroup(
+            NumInvAdd_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(NumInvAdd_JPLLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(SelectInvCode_JLB1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(NumInvAdd_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(InvNumADD_JLB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(InvNumAdd_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(PHDAdd_JLB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(PHDAdd_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(NumInvAdd_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(NumInvAdd_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(keeperAdd_JLB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(keeperAdd_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(NumInvAdd_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(CPN_JLB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(CPN_Add, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(DPNAdd_JLB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(DPN_Add, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(NumInvAdd_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(locationAdd_JLB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(locationAdd_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(NumInvAdd_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(InvNameAdd_JLB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(InvNameAdd_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(NumInvAdd_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(InvModelAdd_JLB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(InvModelAdd_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(NumInvAdd_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(InvQuantityAdd_JLB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(InvQuantity_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(NumInvAdd_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(RemarkAdd_JLB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(NumInvAdd_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(NewInvAdd_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(NewInvAdd_cancel_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
+        queryResult_JPL.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        CheckInvNum_TF.setEditable(false);
+        CheckInvNum_TF.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        CheckInvNum_TF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        CheckInvNum_TF.setPreferredSize(new java.awt.Dimension(100, 30));
+
+        CheckInvNum_JLB.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        CheckInvNum_JLB.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        CheckInvNum_JLB.setText("查詢結果");
+        CheckInvNum_JLB.setMaximumSize(new java.awt.Dimension(100, 30));
+        CheckInvNum_JLB.setMinimumSize(new java.awt.Dimension(100, 30));
+        CheckInvNum_JLB.setPreferredSize(new java.awt.Dimension(100, 30));
+
+        ChecnInvNum_JLB.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        ChecnInvNum_JLB.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        ChecnInvNum_JLB.setText("2. 確認資產編號");
+        ChecnInvNum_JLB.setMaximumSize(new java.awt.Dimension(140, 23));
+        ChecnInvNum_JLB.setPreferredSize(new java.awt.Dimension(140, 30));
+
+        NewInvNum_TF.setEditable(false);
+        NewInvNum_TF.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        NewInvNum_TF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        NewInvNum_TF.setPreferredSize(new java.awt.Dimension(100, 30));
+
+        NewInvNum_JLB.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        NewInvNum_JLB.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        NewInvNum_JLB.setText("新建編號");
+        NewInvNum_JLB.setMaximumSize(new java.awt.Dimension(100, 30));
+        NewInvNum_JLB.setMinimumSize(new java.awt.Dimension(100, 30));
+        NewInvNum_JLB.setPreferredSize(new java.awt.Dimension(100, 30));
+
+        invNumSendToAdd_btn.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        invNumSendToAdd_btn.setText("新增");
+        invNumSendToAdd_btn.setToolTipText("");
+        invNumSendToAdd_btn.setMaximumSize(new java.awt.Dimension(100, 30));
+        invNumSendToAdd_btn.setMinimumSize(new java.awt.Dimension(100, 30));
+        invNumSendToAdd_btn.setPreferredSize(new java.awt.Dimension(100, 30));
+        invNumSendToAdd_btn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                invNumSendToAdd_btnMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout queryResult_JPLLayout = new javax.swing.GroupLayout(queryResult_JPL);
+        queryResult_JPL.setLayout(queryResult_JPLLayout);
+        queryResult_JPLLayout.setHorizontalGroup(
+            queryResult_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(queryResult_JPLLayout.createSequentialGroup()
+                .addGap(138, 138, 138)
+                .addComponent(invNumSendToAdd_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(queryResult_JPLLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(queryResult_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(queryResult_JPLLayout.createSequentialGroup()
+                        .addComponent(NewInvNum_JLB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(270, 270, 270))
+                    .addGroup(queryResult_JPLLayout.createSequentialGroup()
+                        .addGroup(queryResult_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(queryResult_JPLLayout.createSequentialGroup()
+                                .addComponent(CheckInvNum_JLB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(ChecnInvNum_JLB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(NewInvNum_TF, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())))
+            .addGroup(queryResult_JPLLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(CheckInvNum_TF, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        queryResult_JPLLayout.setVerticalGroup(
+            queryResult_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(queryResult_JPLLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(ChecnInvNum_JLB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(CheckInvNum_JLB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(CheckInvNum_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(NewInvNum_JLB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(NewInvNum_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(invNumSendToAdd_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(350, 350, 350)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ComCode_jLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(AssetClass_jLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Accounting_jLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ClassCode_jLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(ComCode_jComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(AssetClass_jComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(Accounting_jComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(ClassCode_jComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel4Layout.createSequentialGroup()
-                                        .addComponent(ac1_RB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(AssetClass_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel4Layout.createSequentialGroup()
-                                        .addComponent(ac2_RB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(Accounting_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(ComCode_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(ClassCode_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(invCheck_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(8, 8, 8)
-                                .addComponent(InvCode_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(186, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(Check_JPL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(queryResult_JPL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(NumInvAdd_JPL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(500, 500, 500)
+                .addComponent(AddInvData_JLB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(500, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(AddInvData_JLB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(AssetClass_jComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(AssetClass_jLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ac1_RB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(AssetClass_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(NumInvAdd_JPL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(ComCode_jComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ComCode_jLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(ac2_RB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ComCode_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Accounting_jComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Accounting_jLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Accounting_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ClassCode_jComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ClassCode_jLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ClassCode_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(invCheck_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(InvCode_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 338, Short.MAX_VALUE))
+                        .addComponent(Check_JPL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(queryResult_JPL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout addInvItem_jFrameLayout = new javax.swing.GroupLayout(addInvItem_jFrame.getContentPane());
@@ -562,10 +989,7 @@ public class inventoryListUI extends javax.swing.JFrame {
         );
         addInvItem_jFrameLayout.setVerticalGroup(
             addInvItem_jFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addInvItem_jFrameLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 588, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -587,15 +1011,6 @@ public class inventoryListUI extends javax.swing.JFrame {
             }
         });
 
-        modifyInvItem_btn.setFont(new java.awt.Font("標楷體", 1, 24)); // NOI18N
-        modifyInvItem_btn.setText("修改");
-        modifyInvItem_btn.setPreferredSize(new java.awt.Dimension(100, 40));
-        modifyInvItem_btn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                modifyInvItem_btnMouseClicked(evt);
-            }
-        });
-
         addInvItem_btn.setFont(new java.awt.Font("標楷體", 1, 24)); // NOI18N
         addInvItem_btn.setText("新增");
         addInvItem_btn.setToolTipText("");
@@ -603,16 +1018,6 @@ public class inventoryListUI extends javax.swing.JFrame {
         addInvItem_btn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 addInvItem_btnMouseClicked(evt);
-            }
-        });
-
-        scrappedInvItem_btn.setFont(new java.awt.Font("標楷體", 1, 24)); // NOI18N
-        scrappedInvItem_btn.setText("報廢");
-        scrappedInvItem_btn.setToolTipText("");
-        scrappedInvItem_btn.setPreferredSize(new java.awt.Dimension(100, 40));
-        scrappedInvItem_btn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                scrappedInvItem_btnMouseClicked(evt);
             }
         });
 
@@ -625,24 +1030,19 @@ public class inventoryListUI extends javax.swing.JFrame {
                 .addComponent(queryInvList_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(addInvItem_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(modifyInvItem_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(scrappedInvItem_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(240, Short.MAX_VALUE))
+                .addContainerGap(476, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(queryInvList_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(modifyInvItem_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(addInvItem_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(scrappedInvItem_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(addInvItem_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jPanel2.setBackground(new java.awt.Color(153, 153, 153));
+        InvList_JPL.setBackground(new java.awt.Color(153, 153, 153));
+        InvList_JPL.setPreferredSize(new java.awt.Dimension(1600, 500));
 
         inv_List_Table.setBackground(new java.awt.Color(204, 204, 204));
         inv_List_Table.setFont(new java.awt.Font("標楷體", 0, 18)); // NOI18N
@@ -664,6 +1064,17 @@ public class inventoryListUI extends javax.swing.JFrame {
         });
         inv_List_Table.setRowHeight(30);
         inv_List_Table.setSelectionBackground(new java.awt.Color(204, 204, 204));
+        inv_List_Table.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        inv_List_Table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                inv_List_TableMouseClicked(evt);
+            }
+        });
+        inv_List_Table.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                inv_List_TableKeyReleased(evt);
+            }
+        });
         jScrollPane1.setViewportView(inv_List_Table);
         if (inv_List_Table.getColumnModel().getColumnCount() > 0) {
             inv_List_Table.getColumnModel().getColumn(0).setResizable(false);
@@ -679,15 +1090,229 @@ public class inventoryListUI extends javax.swing.JFrame {
             inv_List_Table.getColumnModel().getColumn(10).setResizable(false);
         }
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout InvList_JPLLayout = new javax.swing.GroupLayout(InvList_JPL);
+        InvList_JPL.setLayout(InvList_JPLLayout);
+        InvList_JPLLayout.setHorizontalGroup(
+            InvList_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1)
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 764, Short.MAX_VALUE)
+        InvList_JPLLayout.setVerticalGroup(
+            InvList_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
+        invInfo_JPL.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        invInfo_Num_JBL.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        invInfo_Num_JBL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        invInfo_Num_JBL.setText("INV_Num");
+        invInfo_Num_JBL.setPreferredSize(new java.awt.Dimension(100, 30));
+
+        invInfo_Num_TF.setEditable(false);
+        invInfo_Num_TF.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        invInfo_Num_TF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        invInfo_Num_TF.setPreferredSize(new java.awt.Dimension(120, 30));
+
+        invInfo_Com_JBL.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        invInfo_Com_JBL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        invInfo_Com_JBL.setText("INV_Com");
+        invInfo_Com_JBL.setPreferredSize(new java.awt.Dimension(100, 30));
+
+        invInfo_Com_TF.setEditable(false);
+        invInfo_Com_TF.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        invInfo_Com_TF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        invInfo_Com_TF.setPreferredSize(new java.awt.Dimension(120, 30));
+
+        invInfo_Dep_JBL.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        invInfo_Dep_JBL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        invInfo_Dep_JBL.setText("INV_Depart");
+        invInfo_Dep_JBL.setPreferredSize(new java.awt.Dimension(100, 30));
+
+        invInfo_Dep_TF.setEditable(false);
+        invInfo_Dep_TF.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        invInfo_Dep_TF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        invInfo_Dep_TF.setPreferredSize(new java.awt.Dimension(120, 30));
+
+        invInfo_Kep_JBL.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        invInfo_Kep_JBL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        invInfo_Kep_JBL.setText("INV_keeper");
+        invInfo_Kep_JBL.setPreferredSize(new java.awt.Dimension(100, 30));
+
+        invInfo_Kep_TF.setEditable(false);
+        invInfo_Kep_TF.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        invInfo_Kep_TF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        invInfo_Kep_TF.setPreferredSize(new java.awt.Dimension(120, 30));
+
+        invInfo_PHD_JBL.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        invInfo_PHD_JBL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        invInfo_PHD_JBL.setText("INV_PHdate");
+        invInfo_PHD_JBL.setToolTipText("");
+        invInfo_PHD_JBL.setPreferredSize(new java.awt.Dimension(100, 30));
+
+        invInfo_PHD_TF.setEditable(false);
+        invInfo_PHD_TF.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        invInfo_PHD_TF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        invInfo_PHD_TF.setPreferredSize(new java.awt.Dimension(120, 30));
+
+        invInfo_Name_JBL.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        invInfo_Name_JBL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        invInfo_Name_JBL.setText("INV_Name");
+        invInfo_Name_JBL.setPreferredSize(new java.awt.Dimension(100, 30));
+
+        invInfo_Name_TF.setEditable(false);
+        invInfo_Name_TF.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        invInfo_Name_TF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        invInfo_Name_TF.setPreferredSize(new java.awt.Dimension(360, 30));
+
+        invInfo_Model_JBL.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        invInfo_Model_JBL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        invInfo_Model_JBL.setText("INV_Model");
+        invInfo_Model_JBL.setPreferredSize(new java.awt.Dimension(100, 30));
+
+        invInfo_Model_TA.setEditable(false);
+        invInfo_Model_TA.setColumns(20);
+        invInfo_Model_TA.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        invInfo_Model_TA.setRows(5);
+        invInfo_Model_TA.setAutoscrolls(false);
+        invInfo_Model_TA.setPreferredSize(new java.awt.Dimension(240, 142));
+        jScrollPane2.setViewportView(invInfo_Model_TA);
+
+        invInfo_Remark_JBL.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        invInfo_Remark_JBL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        invInfo_Remark_JBL.setText("INV_Remark");
+        invInfo_Remark_JBL.setPreferredSize(new java.awt.Dimension(100, 30));
+
+        invInfo_Remark_TA.setEditable(false);
+        invInfo_Remark_TA.setColumns(20);
+        invInfo_Remark_TA.setFont(new java.awt.Font("標楷體", 1, 18)); // NOI18N
+        invInfo_Remark_TA.setRows(5);
+        invInfo_Remark_TA.setAutoscrolls(false);
+        invInfo_Remark_TA.setPreferredSize(new java.awt.Dimension(240, 142));
+        jScrollPane4.setViewportView(invInfo_Remark_TA);
+
+        Invinfo_Option_JPL.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        scrappedInvItem_btn.setFont(new java.awt.Font("標楷體", 1, 24)); // NOI18N
+        scrappedInvItem_btn.setText("報廢");
+        scrappedInvItem_btn.setToolTipText("");
+        scrappedInvItem_btn.setPreferredSize(new java.awt.Dimension(100, 40));
+        scrappedInvItem_btn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                scrappedInvItem_btnMouseClicked(evt);
+            }
+        });
+
+        modifyInvItem_btn.setFont(new java.awt.Font("標楷體", 1, 24)); // NOI18N
+        modifyInvItem_btn.setText("修改");
+        modifyInvItem_btn.setPreferredSize(new java.awt.Dimension(100, 40));
+        modifyInvItem_btn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                modifyInvItem_btnMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout Invinfo_Option_JPLLayout = new javax.swing.GroupLayout(Invinfo_Option_JPL);
+        Invinfo_Option_JPL.setLayout(Invinfo_Option_JPLLayout);
+        Invinfo_Option_JPLLayout.setHorizontalGroup(
+            Invinfo_Option_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Invinfo_Option_JPLLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(Invinfo_Option_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(modifyInvItem_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(scrappedInvItem_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(14, Short.MAX_VALUE))
+        );
+        Invinfo_Option_JPLLayout.setVerticalGroup(
+            Invinfo_Option_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Invinfo_Option_JPLLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(modifyInvItem_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(scrappedInvItem_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout invInfo_JPLLayout = new javax.swing.GroupLayout(invInfo_JPL);
+        invInfo_JPL.setLayout(invInfo_JPLLayout);
+        invInfo_JPLLayout.setHorizontalGroup(
+            invInfo_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(invInfo_JPLLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(Invinfo_Option_JPL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(invInfo_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(invInfo_JPLLayout.createSequentialGroup()
+                        .addComponent(invInfo_Num_JBL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(invInfo_Num_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(invInfo_Name_JBL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(invInfo_Name_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(invInfo_JPLLayout.createSequentialGroup()
+                        .addGroup(invInfo_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(invInfo_JPLLayout.createSequentialGroup()
+                                .addComponent(invInfo_Kep_JBL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(invInfo_Kep_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(invInfo_JPLLayout.createSequentialGroup()
+                                .addComponent(invInfo_Com_JBL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(invInfo_Com_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(invInfo_JPLLayout.createSequentialGroup()
+                                .addComponent(invInfo_Dep_JBL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(invInfo_Dep_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(invInfo_JPLLayout.createSequentialGroup()
+                                .addComponent(invInfo_PHD_JBL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(invInfo_PHD_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(invInfo_Model_JBL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(invInfo_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(invInfo_Remark_JBL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        invInfo_JPLLayout.setVerticalGroup(
+            invInfo_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(invInfo_JPLLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(invInfo_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(invInfo_JPLLayout.createSequentialGroup()
+                        .addGroup(invInfo_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(invInfo_Num_JBL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(invInfo_Num_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(invInfo_Name_JBL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(invInfo_Name_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(invInfo_Remark_JBL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(invInfo_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(invInfo_JPLLayout.createSequentialGroup()
+                                .addGroup(invInfo_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(invInfo_PHD_JBL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(invInfo_PHD_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(invInfo_Model_JBL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(invInfo_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(invInfo_Com_JBL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(invInfo_Com_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(invInfo_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(invInfo_Dep_JBL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(invInfo_Dep_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(invInfo_JPLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(invInfo_Kep_JBL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(invInfo_Kep_TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jScrollPane2)
+                            .addComponent(jScrollPane4))
+                        .addGap(0, 63, Short.MAX_VALUE))
+                    .addComponent(Invinfo_Option_JPL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -695,14 +1320,19 @@ public class inventoryListUI extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(700, 700, 700)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(InvList_JPL, javax.swing.GroupLayout.DEFAULT_SIZE, 1636, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(700, 700, 700)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 36, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(invInfo_JPL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -713,116 +1343,207 @@ public class inventoryListUI extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(InvList_JPL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(invInfo_JPL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void showTable(){
-        ArrayList<inventoryList> inv_List = (ArrayList<inventoryList>) new inventoryListDao().queryTalbe();
-        Object[] o = new Object[11];
-        
-        for(int i=0; i<inv_List.size(); i++){
-            o[0]=inv_List.get(i).getInv_Id();
-            o[1]=inv_List.get(i).getCompany_Name();
-            o[2]=inv_List.get(i).getDepartment_Name();
-            o[3]=inv_List.get(i).getInv_Num();
-            o[4]=inv_List.get(i).getPurchase_data();
-            o[5]=inv_List.get(i).getInv_Name();
-            o[6]=inv_List.get(i).getInv_Model();
-            o[7]=inv_List.get(i).getInv_Quantity();
-            o[8]=inv_List.get(i).getInv_location();
-            o[9]=inv_List.get(i).getInv_keeper();
-            o[10]=inv_List.get(i).getInv_Remark();
-            
-            iniTable.showTable(inv_List_Table, o);            
-        }
+    private void iniBlank() {
+        CLCNum_JLB.setText("");
+        CheckInvNum_TF.setText("");
+        NewInvNum_TF.setText("");
+        InvNumAdd_TF.setText("");
+        keeperAdd_TF.setText("");
+        locationAdd_TF.setText("");
+        InvNameAdd_TF.setText("");
+        InvModelAdd_TF.setText("");
+        RemarkAdd_TA.setText("");
+    }
+
+    private void getInvListSelected(){
+        invInfo_Num_TF.setText(String.valueOf(inv_List_Table.getValueAt(inv_List_Table.getSelectedRow(), 3)));
+        invInfo_PHD_TF.setText(String.valueOf(inv_List_Table.getValueAt(inv_List_Table.getSelectedRow(), 4)));
+        invInfo_Com_TF.setText(String.valueOf(inv_List_Table.getValueAt(inv_List_Table.getSelectedRow(), 1)));
+        invInfo_Dep_TF.setText(String.valueOf(inv_List_Table.getValueAt(inv_List_Table.getSelectedRow(), 2)));
+        invInfo_Kep_TF.setText(String.valueOf(inv_List_Table.getValueAt(inv_List_Table.getSelectedRow(), 9)));
+        invInfo_Name_TF.setText(String.valueOf(inv_List_Table.getValueAt(inv_List_Table.getSelectedRow(), 5)));
+        invInfo_Model_TA.setText(String.valueOf(inv_List_Table.getValueAt(inv_List_Table.getSelectedRow(), 6)));
+        invInfo_Remark_TA.setText(String.valueOf(inv_List_Table.getValueAt(inv_List_Table.getSelectedRow(), 10)));
     }
     
-    private void setConboBox(){
-        DefaultComboBoxModel CBModel = new DefaultComboBoxModel();
-        ArrayList<assetsClass> acList = (ArrayList<assetsClass>) new assetsClassDao().queryTalbe();
-        Object[] o = new Object[3];
-        
-        for(int i=0; i<acList.size(); i++){
-            o[0]=acList.get(i).getAcID();
-            o[1]=acList.get(i).getAcNum();
-            o[2]=acList.get(i).getAcName();
-            
-            AssetClass_jComboBox.addItem(o[1].toString()+""+o[2].toString());          
-        }     
-    }
     private void queryInvList_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_queryInvList_btnMouseClicked
-        
+        iniTable.iniInvListTable(inv_List_Table);
+        iniTable.setTable(inv_List_Table);
+        //iniTable.iniInvListTable(inv_List_Table);
+        /*
         ArrayList<inventoryList> inv_List = (ArrayList<inventoryList>) new inventoryListDao().queryTalbe();
         Object[] o = new Object[11];
-        
-        for(int i=0; i<inv_List.size(); i++){
-            o[0]=inv_List.get(i).getInv_Id();
-            o[1]=inv_List.get(i).getCompany_Name();
-            o[2]=inv_List.get(i).getDepartment_Name();
-            o[3]=inv_List.get(i).getInv_Num();
-            o[4]=inv_List.get(i).getPurchase_data();
-            o[5]=inv_List.get(i).getInv_Name();
-            o[6]=inv_List.get(i).getInv_Model();
-            o[7]=inv_List.get(i).getInv_Quantity();
-            o[8]=inv_List.get(i).getInv_location();
-            o[9]=inv_List.get(i).getInv_keeper();
-            o[10]=inv_List.get(i).getInv_Remark();
-            
-            iniTable.showTable(inv_List_Table, o);            
-        }
-        
+
+        inv_List.stream().map(inv -> {
+            o[0] = inv.getInv_Id();
+            return inv;
+        }).map(inv -> {
+            o[1] = inv.getCompany_Name();
+            return inv;
+        }).map(inv -> {
+            o[2] = inv.getDepartment_Name();
+            return inv;
+        }).map(inv -> {
+            o[3] = inv.getInv_Num();
+            return inv;
+        }).map(inv -> {
+            o[4] = inv.getPurchase_data();
+            return inv;
+        }).map(inv -> {
+            o[5] = inv.getInv_Name();
+            return inv;
+        }).map(inv -> {
+            o[6] = inv.getInv_Model();
+            return inv;
+        }).map(inv -> {
+            o[7] = inv.getInv_Quantity();
+            return inv;
+        }).map(inv -> {
+            o[8] = inv.getInv_location();
+            return inv;
+        }).map(inv -> {
+            o[9] = inv.getInv_keeper();
+            return inv;
+        }).map(inv -> {
+            o[10] = inv.getInv_Remark();
+            return inv;
+        }).forEachOrdered(_item -> {
+            iniTable.showTable(inv_List_Table, o);
+        }); 
+         */
     }//GEN-LAST:event_queryInvList_btnMouseClicked
 
     private void modifyInvItem_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_modifyInvItem_btnMouseClicked
         setupComponent.JFrameCenter(modifyInvItem_JFrame);
-        
-        DefaultTableModel model = (DefaultTableModel) inv_List_Table.getModel();
-        
-        invID_jTextField.setText(String.valueOf(model.getValueAt(inv_List_Table.getSelectedRow(), 0)));
-        comName_jTextField.setText((String) model.getValueAt(inv_List_Table.getSelectedRow(), 1));
-        depart_jTextField.setText((String) model.getValueAt(inv_List_Table.getSelectedRow(), 2));
-        invNum_jTextField.setText(String.valueOf(model.getValueAt(inv_List_Table.getSelectedRow(), 3)));
-        purchase_jTextField.setText(String.valueOf(model.getValueAt(inv_List_Table.getSelectedRow(), 4)));
-        invName_jTextField.setText(String.valueOf(model.getValueAt(inv_List_Table.getSelectedRow(), 5)));
-        invModel_jTextField.setText(String.valueOf(model.getValueAt(inv_List_Table.getSelectedRow(), 6)));
-        invQuantity_jTextField.setText(String.valueOf(model.getValueAt(inv_List_Table.getSelectedRow(), 7)));
-        location_jTextField.setText(String.valueOf(model.getValueAt(inv_List_Table.getSelectedRow(), 8)));
-        keeper_jTextField.setText(String.valueOf(model.getValueAt(inv_List_Table.getSelectedRow(), 9)));
-        remark_jTextArea.setText(String.valueOf(model.getValueAt(inv_List_Table.getSelectedRow(), 10)));
+
+        if (inv_List_Table.getSelectedRow() >= 0) {
+            DefaultTableModel model = (DefaultTableModel) inv_List_Table.getModel();
+
+            InvModID_TF.setText(String.valueOf(model.getValueAt(inv_List_Table.getSelectedRow(), 0)));
+            CPNMod_TF.setText((String) model.getValueAt(inv_List_Table.getSelectedRow(), 1));
+            DPMod_TF.setText((String) model.getValueAt(inv_List_Table.getSelectedRow(), 2));
+            INMod_TF.setText(String.valueOf(model.getValueAt(inv_List_Table.getSelectedRow(), 3)));
+            PHDMod_TF.setText(String.valueOf(model.getValueAt(inv_List_Table.getSelectedRow(), 4)));
+            INMMod_TF.setText(String.valueOf(model.getValueAt(inv_List_Table.getSelectedRow(), 5)));
+            IMDMod_TF.setText(String.valueOf(model.getValueAt(inv_List_Table.getSelectedRow(), 6)));
+            IQTMod_TF.setText(String.valueOf(model.getValueAt(inv_List_Table.getSelectedRow(), 7)));
+            LCMod_TF.setText(String.valueOf(model.getValueAt(inv_List_Table.getSelectedRow(), 8)));
+            KPMod_TF.setText(String.valueOf(model.getValueAt(inv_List_Table.getSelectedRow(), 9)));
+            RMMod_TA.setText(String.valueOf(model.getValueAt(inv_List_Table.getSelectedRow(), 10)));
+        }
     }//GEN-LAST:event_modifyInvItem_btnMouseClicked
 
     private void addInvItem_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addInvItem_btnMouseClicked
         setupComponent.JFrameCenter(addInvItem_jFrame);
-        setConboBox();
-        
+        iniBlank();
+        setComboBox.setInvCode_JBItem(AssetClass_Check, ComCode_Check, AccSub_Check, ClassCode_Check, CPN_Add, DPN_Add);
+        SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+        PHDAdd_TF.setText(df.format(new Date()));
     }//GEN-LAST:event_addInvItem_btnMouseClicked
 
     private void scrappedInvItem_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_scrappedInvItem_btnMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_scrappedInvItem_btnMouseClicked
 
-    private void invCheck_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_invCheck_btnMouseClicked
-        String getSelected = String.valueOf(AssetClass_jComboBox.getSelectedItem());       
-        String num = getSelected.stripLeading();
-        Integer ID = Integer.parseInt(AssetClass_TF.getText()+ComCode_TF.getText()+Accounting_TF.getText()+ClassCode_TF.getText());
-        InvCode_TF.setText(new inventoryListDao().queryCheck(AssetClass_TF.getText()+ComCode_TF.getText()+Accounting_TF.getText()+ClassCode_TF.getText()).getInv_Num());
-        
-        //InvCode_TF.setText(AssetClass_TF.getText()+ComCode_TF.getText()+Accounting_TF.getText()+ClassCode_TF.getText());
-        //InvCode_TF.setText(String.valueOf(AssetClass_jComboBox.getSelectedItem()));
-        //InvCode_TF.setText(assetClass_BG.getSelection());
-    }//GEN-LAST:event_invCheck_btnMouseClicked
-    
+    private void invQuery_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_invQuery_btnMouseClicked
+        if (ACNum_JLB.getText().equals("") || CPCNum_JLB.getText().equals("") || ASNum_JLB.getText().equals("") || CLCNum_JLB.getText().equals("")) {
+            CheckInvNum_TF.setText("沒有選定資產類別");
+        } else {
+            if (new inventoryListDao().queryInvNum(ACNum_JLB.getText() + CPCNum_JLB.getText() + ASNum_JLB.getText() + CLCNum_JLB.getText())) {
+                CheckInvNum_TF.setText(new inventoryListDao().queryCheck(ACNum_JLB.getText() + CPCNum_JLB.getText() + ASNum_JLB.getText() + CLCNum_JLB.getText()).getInv_Num());
+                NewInvNum_TF.setText(String.valueOf(Integer.parseInt(CheckInvNum_TF.getText()) + 1));
+            } else {
+                CheckInvNum_TF.setText("沒有該資產類別資料，為第一筆 !");
+                NewInvNum_TF.setText(ACNum_JLB.getText() + CPCNum_JLB.getText() + ASNum_JLB.getText() + CLCNum_JLB.getText() + "0001");
+            }
+        }
+    }//GEN-LAST:event_invQuery_btnMouseClicked
+
+    private void AssetClass_CheckItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_AssetClass_CheckItemStateChanged
+        // TODO add your handling code here:
+        setComboBox.check(AssetClass_Check, ACNum_JLB);
+    }//GEN-LAST:event_AssetClass_CheckItemStateChanged
+
+    private void ComCode_CheckItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ComCode_CheckItemStateChanged
+        // TODO add your handling code here:
+        setComboBox.check(ComCode_Check, CPCNum_JLB);
+    }//GEN-LAST:event_ComCode_CheckItemStateChanged
+
+    private void AccSub_CheckItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_AccSub_CheckItemStateChanged
+        // TODO add your handling code here:
+        setComboBox.check(AccSub_Check, ASNum_JLB);
+        setComboBox.setCLC_CheckByAS_Check(ClassCode_Check, ASNum_JLB);
+    }//GEN-LAST:event_AccSub_CheckItemStateChanged
+
+    private void ClassCode_CheckItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ClassCode_CheckItemStateChanged
+        // TODO add your handling code here:
+        setComboBox.check(ClassCode_Check, CLCNum_JLB);
+    }//GEN-LAST:event_ClassCode_CheckItemStateChanged
+
+    private void invNumSendToAdd_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_invNumSendToAdd_btnMouseClicked
+        // TODO add your handling code here:
+        InvNumAdd_TF.setText(NewInvNum_TF.getText());
+        setComboBox.setInvCode_JBItem(AssetClass_Check, ComCode_Check, AccSub_Check, ClassCode_Check, CPN_Add, DPN_Add);
+        CLCNum_JLB.setText("");
+        CheckInvNum_TF.setText("");
+        NewInvNum_TF.setText("");
+    }//GEN-LAST:event_invNumSendToAdd_btnMouseClicked
+
+    private void NewInvAdd_cancel_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_NewInvAdd_cancel_btnMouseClicked
+        // TODO add your handling code here:
+        addInvItem_jFrame.dispose();
+        iniBlank();
+    }//GEN-LAST:event_NewInvAdd_cancel_btnMouseClicked
+
+    private void NewInvAdd_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_NewInvAdd_btnMouseClicked
+        // TODO add your handling code here:
+        if (!InvNumAdd_TF.getText().equals("") && CPN_Add.getSelectedIndex() >= 0 && DPN_Add.getSelectedIndex() >= 0) {
+            new inventoryListDao().add(
+                    new inventoryList(
+                            Integer.parseInt(InvQuantity_TF.getText()),
+                            CPN_Add.getSelectedItem().toString(),
+                            DPN_Add.getSelectedItem().toString(),
+                            InvNumAdd_TF.getText(),
+                            PHDAdd_TF.getText(),
+                            InvNameAdd_TF.getText(),
+                            InvModelAdd_TF.getText(),
+                            locationAdd_TF.getText(),
+                            keeperAdd_TF.getText(),
+                            RemarkAdd_TA.getText()
+                    )
+            );
+
+            iniBlank();
+            setComboBox.setInvAdd_JBItem(CPN_Add, DPN_Add);
+        }
+    }//GEN-LAST:event_NewInvAdd_btnMouseClicked
+
+    private void inv_List_TableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inv_List_TableMouseClicked
+        // TODO add your handling code here:
+        getInvListSelected();
+    }//GEN-LAST:event_inv_List_TableMouseClicked
+
+    private void inv_List_TableKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inv_List_TableKeyReleased
+        // TODO add your handling code here:
+        getInvListSelected();
+    }//GEN-LAST:event_inv_List_TableKeyReleased
+
     //視窗置中
-    public final void setCenter(){
-        Toolkit toolkit=getToolkit();
-        Dimension size=toolkit.getScreenSize();
-        setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);
+    public final void setCenter() {
+        Toolkit toolkit = getToolkit();
+        Dimension size = toolkit.getScreenSize();
+        setLocation(size.width / 2 - getWidth() / 2, size.height / 2 - getHeight() / 2);
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -859,63 +1580,113 @@ public class inventoryListUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField Accounting_TF;
-    private javax.swing.JComboBox<String> Accounting_jComboBox;
-    private javax.swing.JLabel Accounting_jLabel;
-    private javax.swing.JTextField AssetClass_TF;
-    private javax.swing.JComboBox<String> AssetClass_jComboBox;
-    private javax.swing.JLabel AssetClass_jLabel;
-    private javax.swing.JTextField ClassCode_TF;
-    private javax.swing.JComboBox<String> ClassCode_jComboBox;
-    private javax.swing.JLabel ClassCode_jLabel;
-    private javax.swing.JTextField ComCode_TF;
-    private javax.swing.JComboBox<String> ComCode_jComboBox;
-    private javax.swing.JLabel ComCode_jLabel;
-    private javax.swing.JTextField InvCode_TF;
-    private javax.swing.JLabel InvID_jLabel;
-    private javax.swing.JRadioButton ac1_RB;
-    private javax.swing.JRadioButton ac2_RB;
+    private javax.swing.JLabel ACNum_JLB;
+    private javax.swing.JLabel ASNum_JLB;
+    private javax.swing.JComboBox<String> AccSub_Check;
+    private javax.swing.JLabel AccSub_JLB;
+    private javax.swing.JLabel AddInvData_JLB;
+    private javax.swing.JComboBox<String> AssetClass_Check;
+    private javax.swing.JLabel AssetClass_JLB;
+    private javax.swing.JLabel CLCNum_JLB;
+    private javax.swing.JLabel CPCNum_JLB;
+    private javax.swing.JLabel CPNMod_JBL;
+    private javax.swing.JTextField CPNMod_TF;
+    private javax.swing.JComboBox<String> CPN_Add;
+    private javax.swing.JLabel CPN_JLB;
+    private javax.swing.JLabel CheckInvNum_JLB;
+    private javax.swing.JTextField CheckInvNum_TF;
+    private javax.swing.JPanel Check_JPL;
+    private javax.swing.JLabel ChecnInvNum_JLB;
+    private javax.swing.JComboBox<String> ClassCode_Check;
+    private javax.swing.JLabel ClassCode_JLB;
+    private javax.swing.JComboBox<String> ComCode_Check;
+    private javax.swing.JLabel ComCode_JLB;
+    private javax.swing.JLabel DPMod_JLB;
+    private javax.swing.JTextField DPMod_TF;
+    private javax.swing.JLabel DPNAdd_JLB;
+    private javax.swing.JComboBox<String> DPN_Add;
+    private javax.swing.JLabel IMDMod_JBL;
+    private javax.swing.JTextField IMDMod_TF;
+    private javax.swing.JLabel INMMod_JBL;
+    private javax.swing.JTextField INMMod_TF;
+    private javax.swing.JLabel INMod_JLB;
+    private javax.swing.JTextField INMod_TF;
+    private javax.swing.JLabel IQTMod_JBL;
+    private javax.swing.JTextField IQTMod_TF;
+    private javax.swing.JPanel InvInfoMod_JBL;
+    private javax.swing.JPanel InvList_JPL;
+    private javax.swing.JButton InvModCancel;
+    private javax.swing.JLabel InvModID_JBL;
+    private javax.swing.JTextField InvModID_TF;
+    private javax.swing.JButton InvModSend;
+    private javax.swing.JLabel InvMod_JBL;
+    private javax.swing.JLabel InvModelAdd_JLB;
+    private javax.swing.JTextField InvModelAdd_TF;
+    private javax.swing.JLabel InvNameAdd_JLB;
+    private javax.swing.JTextField InvNameAdd_TF;
+    private javax.swing.JLabel InvNumADD_JLB;
+    private javax.swing.JTextField InvNumAdd_TF;
+    private javax.swing.JLabel InvQuantityAdd_JLB;
+    private javax.swing.JTextField InvQuantity_TF;
+    private javax.swing.JPanel Invinfo_Option_JPL;
+    private javax.swing.JLabel KPMod_JLB;
+    private javax.swing.JTextField KPMod_TF;
+    private javax.swing.JLabel LCMod_JBL;
+    private javax.swing.JTextField LCMod_TF;
+    private javax.swing.JButton NewInvAdd_btn;
+    private javax.swing.JButton NewInvAdd_cancel_btn;
+    private javax.swing.JLabel NewInvNum_JLB;
+    private javax.swing.JTextField NewInvNum_TF;
+    private javax.swing.JPanel NumInvAdd_JPL;
+    private javax.swing.JLabel PHDAdd_JLB;
+    private javax.swing.JTextField PHDAdd_TF;
+    private javax.swing.JLabel PHDMod_JBL;
+    private javax.swing.JTextField PHDMod_TF;
+    private javax.swing.JLabel RMMod_JBL;
+    private javax.swing.JScrollPane RMMod_JSP;
+    private javax.swing.JTextArea RMMod_TA;
+    private javax.swing.JLabel RemarkAdd_JLB;
+    private javax.swing.JTextArea RemarkAdd_TA;
+    private javax.swing.JLabel SelectInvCode_JLB;
+    private javax.swing.JLabel SelectInvCode_JLB1;
     private javax.swing.JButton addInvItem_btn;
     private javax.swing.JFrame addInvItem_jFrame;
-    private javax.swing.ButtonGroup assetClass_BG;
-    private javax.swing.JLabel comName_jLabel;
-    private javax.swing.JTextField comName_jTextField;
-    private javax.swing.JLabel depart_jLabel;
-    private javax.swing.JTextField depart_jTextField;
     private javax.swing.JDialog errMsg_jDialog;
-    private javax.swing.JButton invCheck_btn;
-    private javax.swing.JTextField invID_jTextField;
-    private javax.swing.JLabel invModel_jLabel;
-    private javax.swing.JTextField invModel_jTextField;
-    private javax.swing.JLabel invName_jLabel;
-    private javax.swing.JTextField invName_jTextField;
-    private javax.swing.JLabel invNum_jLabel;
-    private javax.swing.JTextField invNum_jTextField;
-    private javax.swing.JLabel invQuantity_jLabel;
-    private javax.swing.JTextField invQuantity_jTextField;
+    private javax.swing.JLabel invInfo_Com_JBL;
+    private javax.swing.JTextField invInfo_Com_TF;
+    private javax.swing.JLabel invInfo_Dep_JBL;
+    private javax.swing.JTextField invInfo_Dep_TF;
+    private javax.swing.JPanel invInfo_JPL;
+    private javax.swing.JLabel invInfo_Kep_JBL;
+    private javax.swing.JTextField invInfo_Kep_TF;
+    private javax.swing.JLabel invInfo_Model_JBL;
+    private javax.swing.JTextArea invInfo_Model_TA;
+    private javax.swing.JLabel invInfo_Name_JBL;
+    private javax.swing.JTextField invInfo_Name_TF;
+    private javax.swing.JLabel invInfo_Num_JBL;
+    private javax.swing.JTextField invInfo_Num_TF;
+    private javax.swing.JLabel invInfo_PHD_JBL;
+    private javax.swing.JTextField invInfo_PHD_TF;
+    private javax.swing.JLabel invInfo_Remark_JBL;
+    private javax.swing.JTextArea invInfo_Remark_TA;
+    private javax.swing.JButton invNumSendToAdd_btn;
+    private javax.swing.JButton invQuery_btn;
     private javax.swing.JTable inv_List_Table;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JLabel keeper_jLabel;
-    private javax.swing.JTextField keeper_jTextField;
-    private javax.swing.JLabel location_jLabel;
-    private javax.swing.JTextField location_jTextField;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JLabel keeperAdd_JLB;
+    private javax.swing.JTextField keeperAdd_TF;
+    private javax.swing.JLabel locationAdd_JLB;
+    private javax.swing.JTextField locationAdd_TF;
     private javax.swing.JFrame modifyInvItem_JFrame;
     private javax.swing.JButton modifyInvItem_btn;
-    private javax.swing.JLabel purchase_jLabel;
-    private javax.swing.JTextField purchase_jTextField;
     private javax.swing.JButton queryInvList_btn;
-    private javax.swing.JLabel remark_jLabel;
-    private javax.swing.JTextArea remark_jTextArea;
+    private javax.swing.JPanel queryResult_JPL;
     private javax.swing.JButton scrappedInvItem_btn;
     // End of variables declaration//GEN-END:variables
 }
